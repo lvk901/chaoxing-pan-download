@@ -104,11 +104,22 @@ skill 目录下自带 `chaoxing-download.sh`：
 bash <skill目录>/chaoxing-download.sh "<预览链接>"
 ```
 
+### 补充：给不装命令行的用户（浏览器控制台）
+
+**直链不能粘到地址栏**（无 Referer → 403）。正确做法是在预览页里触发：
+
+1. 单独用标签页打开预览链接。
+2. `F12` → **Console**，执行 `location.href = fileinfo.download`（`fileinfo` 是预览页的全局变量）。
+3. 若 `fileinfo` 未定义：先在源码里搜出 `d0.cldisk.com/download/...` 直链，再在同一预览页控制台执行 `location.href = '<直链>'`。
+
+原理：这样发起的请求会带上预览页 URL 作为 Referer，正好通过防盗链。
+
 ## 常见问题排查
 
 | 现象 | 原因 | 处理 |
 |------|------|------|
 | `403 Forbidden / Invalid Request` | 缺 Referer 头，或 `at_/ak_/ad_` 签名过期 | 补 `-e "https://pan-yz.chaoxing.com/"`；过期则重新抓预览页拿新直链 |
+| 浏览器里把直链粘到地址栏 → 403 | 地址栏请求不带 Referer | 别直接粘地址栏；在预览页控制台执行 `location.href = fileinfo.download` |
 | `405 Method Not Allowed` | 用了 HEAD | 改用 GET |
 | 页面里找不到 `download` 字段 | 链接已失效 / 需登录 / 文件被删 | 让用户重新打开原分享链接生成新链接；确认有访问权限 |
 | 直链下载下来是 HTML | 拿错了 URL 或没带 Referer | 检查是否提取到了 `cldisk.com/download/...` 而非预览页地址 |

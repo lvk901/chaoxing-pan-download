@@ -63,12 +63,21 @@ bash skills/chaoxing-pan-download/chaoxing-download.sh "你的预览链接"
 
 ### 方法 2：不用命令行（浏览器操作）
 
-1. 浏览器打开预览链接，等页面加载出来
-2. 按 `F12`，点上面的 **Network（网络）** 标签
-3. 刷新一下页面
-4. 在筛选框里输入 `download`
-5. 找到那条请求，右键 → **Copy → Copy link address**
-6. 把复制到的地址粘进浏览器地址栏，回车，就开始下载了
+> ⚠️ 重点：**别把直链粘到地址栏回车** —— 那样没有"来源标记"（Referer），一定会 403。
+> 必须在预览页"内部"触发下载。
+
+1. 浏览器**单独开一个标签页**打开预览链接，等页面加载出来
+2. 按 `F12`，切到 **Console（控制台）** 标签
+3. 输入下面这行，回车：
+
+   ```js
+   location.href = fileinfo.download
+   ```
+
+   浏览器就会带着正确的来源标记去下载（会弹出保存对话框）。
+
+> 想先看一眼直链？控制台输入 `fileinfo.download` 回车就能看到那条 `d0.cldisk.com/download/...`。
+> 如果提示 `fileinfo is not defined`：改到 Elements / 源码里搜 `download` 找到直链，然后在**同一个预览页的控制台**里执行 `location.href = '那条直链'`（关键是必须在预览页里执行，才会带上来源标记）。
 
 ---
 
