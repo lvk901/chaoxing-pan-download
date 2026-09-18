@@ -1,6 +1,7 @@
 ---
 name: chaoxing-pan-download
-description: 下载超星网盘（超星学习通 / chaoxing.com / cldisk.com）的在线预览文件。当用户给出 pan-yz.chaoxing.com、pan.chaoxing.com 的 screen/v2 或 preview 链接，或问「这个超星/学习通/网盘文件怎么下载」「帮我下载这个超星文件」时使用。核心方法：GET 抓取预览页，从 HTML 里的 fileinfo.download 字段提取真实直链，再带 Referer: https://pan-yz.chaoxing.com/ 请求头下载（不带会 403）。
+description: >-
+  下载超星网盘（超星学习通 / chaoxing.com / cldisk.com）的在线预览文件。当用户给出 pan-yz.chaoxing.com、pan.chaoxing.com 的 screen/v2 或 preview 链接，或问「这个超星/学习通/网盘文件怎么下载」「帮我下载这个超星文件」时使用。核心方法：GET 抓取预览页，从 HTML 里的 fileinfo.download 字段提取真实直链，再带 Referer 请求头（值为预览页域名）下载，否则会 403。
 ---
 
 # 超星网盘文件下载（Chaoxing Pan Download）
