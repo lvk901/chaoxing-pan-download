@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# temp
+*.tmp
+*.log
+
+# downloaded samples
+*.pptx
+*.docx
+*.pdf
+preview.html
