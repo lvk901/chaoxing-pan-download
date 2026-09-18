@@ -28,10 +28,10 @@ description: >-
 
 1. 浏览器登录学习通/泛雅，打开课程页（`mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?...`），左侧点「资料」。
 2. 点开要下载的课件，等预览弹出。
-3. 按 `F12` → **Elements（元素）** 面板，`Ctrl+F` 搜 `panView`（或 `screen/v2`），找到 `<iframe id="panView">`。
-4. 复制它的 `src` 属性值 —— 这就是要交给本 skill 的「预览链接」。
+3. 按 `F12` 打开开发者工具，点左上角的**选取按钮**（箭头图标，快捷键 `Ctrl+Shift+C`），再**直接点预览窗里的课件画面** —— 元素面板会自动定位到那个 `<iframe id="panView">`。
+4. 在这个 `<iframe>` 上复制 `src` 属性值 —— 这就是要交给本 skill 的「预览链接」。
 
-> 也可以在 **Network（网络）** 面板筛选 `screen/v2`，同样能拿到这条链接。
+> 备用方式：在 **Elements（元素）** 面板 `Ctrl+F` 搜 `panView`；或在 **Network（网络）** 面板筛选 `screen/v2`，同样能拿到这条链接。
 
 **怎么判断链接对不对：** 预览链接的 `ext` 参数里有个 `_from_` 字段（形如 `{"_from_":"266422019_152845954_351846202_<hash>"}`），前两段数字就是来源课程的 `courseId` 和 `clazzId`，能和课程页 URL 里的 `courseId=`、`clazzId=` 对上。对不上，说明链接不是从这门课来的。
 
