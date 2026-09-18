@@ -33,7 +33,7 @@ description: >-
 
 > 备用方式：在 **Elements（元素）** 面板 `Ctrl+F` 搜 `panView`；或在 **Network（网络）** 面板筛选 `screen/v2`，同样能拿到这条链接。
 
-**怎么判断链接对不对：** 预览链接的 `ext` 参数里有个 `_from_` 字段（形如 `{"_from_":"266422019_152845954_351846202_<hash>"}`），前两段数字就是来源课程的 `courseId` 和 `clazzId`，能和课程页 URL 里的 `courseId=`、`clazzId=` 对上。对不上，说明链接不是从这门课来的。
+**怎么判断链接对不对：** 预览链接的 `ext` 参数里有个 `_from_` 字段（形如 `{"_from_":"<courseId>_<clazzId>_<数字>_<hash>"}`），前两段数字就是来源课程的 `courseId` 和 `clazzId`，能和课程页 URL 里的 `courseId=`、`clazzId=` 对上。对不上，说明链接不是从这门课来的。
 
 > ⚠️ 课程页链接（`mooc2-ans.chaoxing.com/...`）本身**不能**直接下载，也**不能**交给本 skill 处理——它需要登录态。真正的输入必须是 `pan-yz.chaoxing.com/screen/v2/file_...` 这条预览链接。
 

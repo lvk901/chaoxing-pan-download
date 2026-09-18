@@ -12,14 +12,14 @@
 1. 浏览器登录**学习通 / 泛雅**，打开某门课的**课程页**，地址类似：
 
    ```
-   https://mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?courseId=266422019&clazzId=152845954&cpi=...&enc=...
+   https://mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?courseId=123456789&clazzId=987654321&cpi=...&enc=...
    ```
 
 2. 点左侧「**资料**」，点开要下载的课件，弹出预览窗。
 3. 这个预览窗里，其实藏着一个看不见的"框"（iframe），它的地址就是我们要的那条链接：
 
    ```
-   https://pan-yz.chaoxing.com/screen/v2/file_a953a79b...?ext=...&appid=...&signature=...
+   https://pan-yz.chaoxing.com/screen/v2/file_xxxxxxxx...?ext=...&appid=...&signature=...
    ```
 
 **怎么把它挖出来？**
