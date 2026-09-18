@@ -5,13 +5,31 @@
 
 ---
 
-## 一、为什么直接下不了？
+## 一、这个链接从哪来？
 
-你拿到的链接长这样：
+先搞清楚我们要下载的链接长什么样。平时你的操作是这样的：
 
-```
-https://pan-yz.chaoxing.com/screen/v2/file_xxxx?...
-```
+1. 浏览器登录**学习通 / 泛雅**，打开某门课的**课程页**，地址类似：
+
+   ```
+   https://mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?courseId=266422019&clazzId=152845954&cpi=...&enc=...
+   ```
+
+2. 点左侧「**资料**」，点开要下载的课件，弹出预览窗。
+3. 这个预览窗里，其实藏着一个看不见的"框"（iframe），它的地址就是我们要的那条链接：
+
+   ```
+   https://pan-yz.chaoxing.com/screen/v2/file_a953a79b...?ext=...&appid=...&signature=...
+   ```
+
+**怎么把它挖出来？** 在预览窗上按 `F12`，在元素面板里搜 `panView`，找到 `<iframe id="panView">`，复制它的 `src` 就是。
+
+> 一句话：**这条链接不是自己拼的，是从课程预览窗里"挖"出来的。**
+> 课程页那个网址本身下不了，能交给工具处理的，是这条 `pan-yz.chaoxing.com/screen/v2/file_...` 链接。
+
+---
+
+## 二、为什么这条链接直接下不了？
 
 它其实是一个**在线预览页**，不是文件的真实地址。真正能下载的地址藏在网页源码里；而且服务器还设了"防盗链"——下载时必须带上正确的来源标记，否则会被拒绝（报 403）。
 
@@ -19,7 +37,7 @@ https://pan-yz.chaoxing.com/screen/v2/file_xxxx?...
 
 ---
 
-## 二、怎么下载
+## 三、怎么下载
 
 ### 方法 1：一键脚本（推荐）
 
@@ -47,7 +65,7 @@ bash skills/chaoxing-pan-download/chaoxing-download.sh "你的预览链接"
 
 ---
 
-## 三、给 AI 助手用
+## 四、给 AI 助手用
 
 项目里的 `skills/chaoxing-pan-download/` 是一个 AI 技能包。复制到你的 skills 目录即可：
 
@@ -59,7 +77,7 @@ cp -r skills/chaoxing-pan-download ~/.agents/skills/
 
 ---
 
-## 四、常见问题
+## 五、常见问题
 
 **下载时报 403 Forbidden？**
 缺了"来源标记"，或链接过期了。用脚本会自动处理；手动下载的话要带上
@@ -73,7 +91,7 @@ cp -r skills/chaoxing-pan-download ~/.agents/skills/
 
 ---
 
-## 五、注意
+## 六、注意
 
 - 请只下载你有权限获取的文件（别人分享给你的、你有权访问的）。
 - 不要用来传播盗版或侵犯版权的内容。

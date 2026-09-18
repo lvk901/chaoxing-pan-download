@@ -8,11 +8,41 @@ description: >-
 
 把超星网盘的「在线预览链接」转换成「真实下载」，核心是抓出页面里埋的直链并带上防盗链 Referer 头。
 
+## 链接从哪来（先搞清楚输入是什么）
+
+那种 `pan-yz.chaoxing.com/screen/v2/file_xxx` 预览链接**不是手工拼出来的**，它是课程页面里一个隐藏 iframe 的 `src`。完整来源链路：
+
+```
+泛雅/学习通课程页（浏览器登录后打开）
+  https://mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?courseId=...&clazzId=...&cpi=...&enc=...&t=...&v=6&ut=s
+      │  左侧「资料」列表里点开一个 PPT / Word / PDF
+      ▼
+弹出预览窗，里面嵌了一个 iframe：
+  <iframe id="panView" ... src="https://pan-yz.chaoxing.com/screen/v2/file_{objectId}?ext=...&appid=...&nonce=...&timestamp=...&signature=...">
+      │  这个 iframe 的 src 就是「预览链接」
+      ▼
+本 skill 处理 → 真实下载直链 → 文件
+```
+
+**怎么拿到这条预览链接（给用户 / 给 AI 的指引）：**
+
+1. 浏览器登录学习通/泛雅，打开课程页（`mooc2-ans.chaoxing.com/mooc2-ans-vue/fanyav3/stu?...`），左侧点「资料」。
+2. 点开要下载的课件，等预览弹出。
+3. 按 `F12` → **Elements（元素）** 面板，`Ctrl+F` 搜 `panView`（或 `screen/v2`），找到 `<iframe id="panView">`。
+4. 复制它的 `src` 属性值 —— 这就是要交给本 skill 的「预览链接」。
+
+> 也可以在 **Network（网络）** 面板筛选 `screen/v2`，同样能拿到这条链接。
+
+**怎么判断链接对不对：** 预览链接的 `ext` 参数里有个 `_from_` 字段（形如 `{"_from_":"266422019_152845954_351846202_<hash>"}`），前两段数字就是来源课程的 `courseId` 和 `clazzId`，能和课程页 URL 里的 `courseId=`、`clazzId=` 对上。对不上，说明链接不是从这门课来的。
+
+> ⚠️ 课程页链接（`mooc2-ans.chaoxing.com/...`）本身**不能**直接下载，也**不能**交给本 skill 处理——它需要登录态。真正的输入必须是 `pan-yz.chaoxing.com/screen/v2/file_...` 这条预览链接。
+
 ## 何时使用
 
 - 用户粘贴一个 `pan-yz.chaoxing.com/screen/v2/file_xxxx` 或 `pan.chaoxing.com` 链接，想下载其中的文件
 - 用户问「超星网盘的文件怎么下载」「学习通里的 PPT/文档怎么保存下来」
 - 链接域名含 `chaoxing.com` 或 `cldisk.com`
+- 用户在课程/资料里点开文件后，从预览窗 iframe（`id="panView"`）里复制出来的 `screen/v2` 链接
 
 ## 关键原理（已验证）
 
