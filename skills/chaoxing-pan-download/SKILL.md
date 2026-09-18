@@ -37,6 +37,14 @@ description: >-
 
 > ⚠️ 课程页链接（`mooc2-ans.chaoxing.com/...`）本身**不能**直接下载，也**不能**交给本 skill 处理——它需要登录态。真正的输入必须是 `pan-yz.chaoxing.com/screen/v2/file_...` 这条预览链接。
 
+## 输入契约（重要）
+
+- 本 skill **只接受** `pan-yz.chaoxing.com/screen/v2/file_...` 形式的预览链接（或与之等价的 `pan.chaoxing.com` / `cldisk.com` 直链）。
+- 该预览链接需要**登录后**才能生成，AI **无法自行获取**：
+  - 若用户只给了课程页（`mooc2-ans.chaoxing.com/...`）、或说「下载我课程里的某文件」，
+    **不要尝试登录、不要猜链接**，而是引导用户按「链接从哪来」一节用 F12 取出预览链接。
+- 拿到预览链接后，下载流程可全自动完成，无需用户再操作。
+
 ## 何时使用
 
 - 用户粘贴一个 `pan-yz.chaoxing.com/screen/v2/file_xxxx` 或 `pan.chaoxing.com` 链接，想下载其中的文件
